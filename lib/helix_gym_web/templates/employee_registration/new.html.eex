@@ -1,4 +1,4 @@
-<h1>Register</h1>
+<h1>Create your Employee Account.</h1>
 
 <%= form_for @changeset, Routes.employee_registration_path(@conn, :create), fn f -> %>
   <%= if @changeset.action do %>
@@ -6,6 +6,14 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
+
+  <%= label f, :name %>
+  <%= text_input f, :name, required: true %>
+  <%= error_tag f, :email %>
+
+  <%= label f, :document %>
+  <%= text_input f, :document, required: true %>
+  <%= error_tag f, :document %>
 
   <%= label f, :email %>
   <%= email_input f, :email, required: true %>

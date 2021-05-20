@@ -5,6 +5,8 @@ defmodule HelixGym.Accounts.Employee do
   @derive {Inspect, except: [:password]}
   schema "employees" do
     field :email, :string
+    field :document, :string
+    field :name, :string
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
@@ -31,9 +33,28 @@ defmodule HelixGym.Accounts.Employee do
   """
   def registration_changeset(employee, attrs, opts \\ []) do
     employee
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:name, :document, :email, :password])
+    |> validate_required([:name, :document])
+    |> validate_cpf(:document)
     |> validate_email()
     |> validate_password(opts)
+  end
+
+  defp validate_cpf(changeset, _document) do
+    validate_change(changeset, :document, fn :document, document ->
+      valid_sum = [22, 33, 44, 55, 66, 77, 88, 99]
+
+      document =
+        String.to_integer(document)
+        |> Integer.digits()
+        |> Enum.sum()
+
+      if Enum.member?(valid_sum, document) do
+        []
+      else
+        [document: "the cpf is not valid"]
+      end
+    end)
   end
 
   defp validate_email(changeset) do

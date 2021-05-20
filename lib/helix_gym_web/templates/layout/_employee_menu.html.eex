@@ -1,6 +1,6 @@
 <ul>
 <%= if @current_employee do %>
-  <li><%= @current_employee.email %></li>
+  <li><%= @current_employee.name %></li>
   <li><%= link "Settings", to: Routes.employee_settings_path(@conn, :edit) %></li>
   <li><%= link "Log out", to: Routes.employee_session_path(@conn, :delete), method: :delete %></li>
 <% else %>
