@@ -1,6 +1,8 @@
 defmodule HelixGymWeb.Router do
   use HelixGymWeb, :router
 
+  import HelixGymWeb.AdmAuth
+
   import HelixGymWeb.EmployeeAuth
 
   pipeline :browser do
@@ -10,6 +12,7 @@ defmodule HelixGymWeb.Router do
     plug :put_root_layout, {HelixGymWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_adm
     plug :fetch_current_employee
   end
 
@@ -62,9 +65,19 @@ defmodule HelixGymWeb.Router do
   scope "/", HelixGymWeb do
     pipe_through [:browser, :require_authenticated_employee]
 
+    # aqui pags funcionarios
+
     get "/employees/settings", EmployeeSettingsController, :edit
     put "/employees/settings", EmployeeSettingsController, :update
     get "/employees/settings/confirm_email/:token", EmployeeSettingsController, :confirm_email
+
+    get "/adm/register", AdmRegistrationController, :new
+    post "/adm/register", AdmRegistrationController, :create
+    get "/adm/log_in", AdmSessionController, :new
+    post "/adm/log_in", AdmSessionController, :create
+    delete "/adm/log_out", AdmSessionController, :delete
+
+    live "/employeepage", EmployeeLive
   end
 
   scope "/", HelixGymWeb do
@@ -74,5 +87,12 @@ defmodule HelixGymWeb.Router do
     get "/employees/confirm", EmployeeConfirmationController, :new
     post "/employees/confirm", EmployeeConfirmationController, :create
     get "/employees/confirm/:token", EmployeeConfirmationController, :confirm
+  end
+
+  scope "/", HelixGymWeb do
+    pipe_through [:browser, :require_authenticated_adm]
+
+    live "/admmode", AdmLive
+    # aqui pags adm
   end
 end

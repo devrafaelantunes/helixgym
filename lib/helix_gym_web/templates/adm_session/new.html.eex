@@ -1,0 +1,23 @@
+<h1>Enter the Administrator Mode</h1>
+
+<%= form_for @conn, Routes.adm_session_path(@conn, :create), [as: :adm], fn f -> %>
+  <%= if @error_message do %>
+    <div class="alert alert-danger">
+      <p><%= @error_message %></p>
+    </div>
+  <% end %>
+
+  <%= label f, :credential %>
+  <%= text_input f, :credential, required: true %>
+
+  <%= label f, :password %>
+  <%= password_input f, :password, required: true %>
+
+  <div>
+    <%= submit "Enter" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link "Register", to: Routes.adm_registration_path(@conn, :new) %> |
+</p>

@@ -1,0 +1,9 @@
+<ul>
+<%= if @current_adm do %>
+  <li><%= @current_adm.email %></li>
+  <li>Logou</li>
+<% else %>
+  <li><%= link "Register", to: Routes.adm_registration_path(@conn, :new) %></li>
+  <li><%= link "Log in", to: Routes.adm_session_path(@conn, :new) %></li>
+<% end %>
+</ul>
