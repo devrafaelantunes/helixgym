@@ -2,14 +2,14 @@
   <%= cond do %>
     <% @current_employee -> %>
       <li> Hello, <%= @current_employee.name %> </li>
-      <li><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
+      <li><%= link "Home", to: Routes.live_path(@conn, HelixGymWeb.EmployeeLive) %></li>
       <li><%= link "Settings", to: Routes.employee_settings_path(@conn, :edit) %></li>
       <li><%= link "ADM Mode", to: Routes.adm_session_path(@conn, :new) %></li>
       <li><%= link "Log out", to: Routes.employee_session_path(@conn, :delete), method: :delete %></li>
 
     <% @current_adm -> %>
       <li>ADM Mode is ON</li>
-      <li><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
+      <li><%= link "Home", to: Routes.live_path(@conn, HelixGymWeb.AdmLive) %></li>
       <li><%= link "Employee Mode", to: Routes.adm_session_path(@conn, :delete), method: :delete %></li>
       <li><%= link "Log out", to: Routes.employee_session_path(@conn, :delete), method: :delete %></li>
 
