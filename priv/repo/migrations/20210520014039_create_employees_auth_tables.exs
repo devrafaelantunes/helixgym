@@ -14,6 +14,7 @@ defmodule HelixGym.Repo.Migrations.CreateEmployeesAuthTables do
     end
 
     create unique_index(:employees, [:email])
+    create unique_index(:employees, [:document])
 
     create table(:employees_tokens) do
       add :employee_id, references(:employees, on_delete: :delete_all), null: false

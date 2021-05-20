@@ -37,9 +37,9 @@ defmodule HelixGym.Accounts do
       nil
 
   """
-  def get_employee_by_email_and_password(email, password)
-      when is_binary(email) and is_binary(password) do
-    employee = Repo.get_by(Employee, email: email)
+  def get_employee_by_document_and_password(document, password)
+      when is_binary(document) and is_binary(password) do
+    employee = Repo.get_by(Employee, document: document)
     if Employee.valid_password?(employee, password), do: employee
   end
 

@@ -9,12 +9,12 @@ defmodule HelixGymWeb.EmployeeSessionController do
   end
 
   def create(conn, %{"employee" => employee_params}) do
-    %{"email" => email, "password" => password} = employee_params
+    %{"document" => document, "password" => password} = employee_params
 
-    if employee = Accounts.get_employee_by_email_and_password(email, password) do
+    if employee = Accounts.get_employee_by_document_and_password(document, password) do
       EmployeeAuth.log_in_employee(conn, employee, employee_params)
     else
-      render(conn, "new.html", error_message: "Invalid email or password")
+      render(conn, "new.html", error_message: "Invalid document or password")
     end
   end
 
